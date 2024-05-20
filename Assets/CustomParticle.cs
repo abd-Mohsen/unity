@@ -22,7 +22,7 @@ public class CustomParticle : MonoBehaviour
         
         // Update age and check if particle should be destroyed
         lifetime -= Time.deltaTime;
-        if (lifetime <= 0) Destroy(gameObject);
+        if (IsDead()) Destroy(gameObject);
         
     }
 }

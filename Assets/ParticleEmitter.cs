@@ -14,6 +14,7 @@ public class ParticleEmitter : MonoBehaviour
     public HashSet<GameObject> particles = new(); // put set outside
 
     //todo: make a wall with multiple emitters
+    //todo: make a hash for BVH
 
     void Start()
     {
@@ -36,7 +37,7 @@ public class ParticleEmitter : MonoBehaviour
         );
 
         GameObject particle = Instantiate(particlePrefab, position, Quaternion.identity);
-        CustomParticle customParticle = particle.GetComponent<CustomParticle>();
+        //CustomParticle customParticle = particle.GetComponent<CustomParticle>();
         //customParticle.velocity = initialVelocity;
 
         particles.Add(particle);
