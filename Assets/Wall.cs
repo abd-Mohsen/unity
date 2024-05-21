@@ -1,8 +1,10 @@
 using UnityEngine;
 
-public class Wall : MonoBehaviour
+public class WallEmitterManager : MonoBehaviour
 {
     public GameObject emitterPrefab; // Reference to the emitter prefab
+    public int numberOfEmitters = 5; // Number of emitters to create
+    public float spacing = 1.0f; // Spacing between emitters
 
     void Start()
     {
@@ -11,24 +13,14 @@ public class Wall : MonoBehaviour
 
     void AddEmitters()
     {
-        // Define wall position and scale
-        Vector3 wallPosition = new Vector3(0, 5, 0);
-        Vector3 wallScale = new Vector3(10, 10, 1);
+        Vector3 wallSize = GetComponent<Renderer>().bounds.size; // Get the size of the wall
+        Vector3 startPosition = transform.position - wallSize / 2 + new Vector3(spacing, 0, 0);
 
-        // Calculate emitter positions
-        Vector3 bottomLeftPosition = wallPosition + new Vector3(-wallScale.x / 2, -wallScale.y / 2, 0);
-        Vector3 centerPosition = wallPosition;
-        Vector3 topRightPosition = wallPosition + new Vector3(wallScale.x / 2, wallScale.y / 2, 0);
-
-        // Instantiate emitters at specified positions
-        InstantiateEmitter(bottomLeftPosition);
-        InstantiateEmitter(centerPosition);
-        InstantiateEmitter(topRightPosition);
-    }
-
-    void InstantiateEmitter(Vector3 position)
-    {
-        GameObject emitter = Instantiate(emitterPrefab, position, Quaternion.identity);
-        emitter.transform.parent = transform; // Parent the emitter to the wall
+        for (int i = 0; i < numberOfEmitters; i++)
+        {
+            Vector3 emitterPosition = startPosition + new Vector3(0, i * spacing, 0);
+            GameObject emitter = Instantiate(emitterPrefab, emitterPosition, Quaternion.identity);
+            emitter.transform.parent = transform; // Parent the emitter to the wall
+        }
     }
 }
