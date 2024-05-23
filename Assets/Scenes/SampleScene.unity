@@ -406,8 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emitterPrefab: {fileID: 5259625775211154617, guid: caffbf09889797449a6be9e075a6c8d3, type: 3}
-  numberOfEmitters: 2
-  spacing: 100
+  numberOfEmitters: 10
+  spacing: 50
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

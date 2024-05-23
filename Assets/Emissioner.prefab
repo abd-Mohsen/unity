@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particlePrefab: {fileID: 6309020766927788226, guid: 055af9325e85e4e41b62aac7978271d8, type: 3}
+  voxelSize: 1
   particleCount: 5000
   emitterPosition: {x: 0, y: 0, z: 0}
   emitterSize: {x: 10, y: 10, z: 2}
