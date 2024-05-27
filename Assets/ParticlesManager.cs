@@ -1,13 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class ParticlesManager : MonoBehaviour
 {
     public HashSet<CustomParticle> particles = new(); // put set outside
     public Dictionary<Vector3Int, List<CustomParticle>> bvh = new();
+    public float voxelSize = 0.5f;
+    public Vector3 sphereCenter = new(7,15,-86);
+    public float sphereRadius = 1.0f;
 
-    public float voxelSize = 1.0f;
+     void Start(){
+        transform.position = sphereCenter;
+        transform.localScale = new(sphereRadius,sphereRadius,sphereRadius);
+        InitializeBVH();
+    }
+
+    void Update(){
+        UpdateBVH();
+        CheckCollisions();
+    }
 
     public void AddParticle(CustomParticle particle){
         particles.Add(particle);
@@ -58,6 +71,7 @@ public class ParticlesManager : MonoBehaviour
 
     public void CheckCollisions(){
         foreach (CustomParticle particle in particles){
+            CheckCollisionWithSphere(particle);
             List<CustomParticle> inVoxel = bvh[GetVoxelCoordinate(particle.transform.position)]; // in the same voxel
             List<CustomParticle> nearby = GetNearbyParticles(GetVoxelCoordinate(particle.transform.position));
             
@@ -69,8 +83,24 @@ public class ParticlesManager : MonoBehaviour
         }
     }
 
+    void CheckCollisionWithSphere(CustomParticle particle){
+        //todo optimize later by only checking particles in voxels that include the sphere
+        Vector3 toParticle = particle.transform.position - sphereCenter;
+        float distance = toParticle.magnitude;
+
+        if (
+            //distance <= sphereRadius + particle.radius
+            particle.transform.position.x == sphereCenter.x
+            )
+        {
+            //HandleCollision(particle, toParticle.normalized);
+            Debug.Log($"{particle.name} is colliding with sphere");
+            particle.Kill();
+        }
+    }
+
     List<CustomParticle> GetNearbyParticles(Vector3Int voxel){
-        List<CustomParticle> nearbyParticles = new List<CustomParticle>();
+        List<CustomParticle> nearbyParticles = new();
 
         for (int x = -1; x <= 1; x++){
             for (int y = -1; y <= 1; y++){

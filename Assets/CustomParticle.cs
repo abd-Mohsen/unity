@@ -5,8 +5,15 @@ public class CustomParticle : MonoBehaviour
     public Vector3 velocity;
     public float lifetime = 10f;
 
+    public float radius = 0.1f;
+
     public bool IsDead(){
         return lifetime <= 0;
+    }
+
+    public void Kill(){
+        Destroy(gameObject);
+        //remove from set
     }
     
     void Start()
