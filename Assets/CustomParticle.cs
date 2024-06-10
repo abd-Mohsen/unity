@@ -15,6 +15,10 @@ public class CustomParticle : MonoBehaviour
         Destroy(gameObject);
         //remove from set
     }
+
+    public void Collide(){
+        velocity = new (0,1,0);
+    }
     
     void Start()
     {
@@ -25,11 +29,15 @@ public class CustomParticle : MonoBehaviour
     void Update()
     {
         // Update particle position
-        transform.position += 30 * Time.deltaTime * velocity;
+        transform.position +=  Time.deltaTime * velocity;
         
         // Update age and check if particle should be destroyed
         lifetime -= Time.deltaTime;
-        if (IsDead()) Destroy(gameObject);
+        if (IsDead()){
+            //Debug.Log("destroyed");
+            Destroy(gameObject);
+            //Kill(); // doesnt work
+        } 
         
     }
 }

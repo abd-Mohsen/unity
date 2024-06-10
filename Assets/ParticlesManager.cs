@@ -77,7 +77,7 @@ public class ParticlesManager : MonoBehaviour
             
             foreach (CustomParticle other in inVoxel.Union(nearby)){
                 if (other != particle && IsColliding(particle, other)){
-                    Debug.Log($"{particle.name} is colliding with {other.name}");
+                    //Debug.Log($"{particle.name} is colliding with {other.name}");
                 }
             }
         }
@@ -90,12 +90,13 @@ public class ParticlesManager : MonoBehaviour
 
         if (
             //distance <= sphereRadius + particle.radius
-            particle.transform.position.x == sphereCenter.x
+            particle.transform.position.x - sphereCenter.x < 0.1
             )
         {
             //HandleCollision(particle, toParticle.normalized);
+            // TODO do a simple collision with a cube (calculate normal and so on..)
             Debug.Log($"{particle.name} is colliding with sphere");
-            particle.Kill();
+            particle.Collide();
         }
     }
 
